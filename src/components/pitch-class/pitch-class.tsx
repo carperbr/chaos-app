@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './pitch-class.scss'
 
 const notes = ['A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#'] as const;

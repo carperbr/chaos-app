@@ -19,9 +19,9 @@ export const NoteSelector = (props: NoteSelectorProps) => {
         <button
             key={note}
             onClick={() => handleNoteClick(activeIndex, note)}
-            className={'note' + (note == activeNote ? ' active' : '')}>
+            className={'note' + (note === activeNote ? ' active' : '')}>
                 {note}
-            </button>
+        </button>
     ))
 
     return (
