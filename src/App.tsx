@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { ToneCircle }  from './components'
 import './App.css';
 
 function App() {
-  const parentRef = React.useRef<HTMLDivElement>(null);
+  const parentRef = useRef<HTMLDivElement>(null);
 
   return (
     <div className="App">
