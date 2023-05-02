@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { ToneCircle }  from './components'
-import './App.css';
+import './App.scss';
 
 function App() {
   const parentRef = useRef<HTMLDivElement>(null);
