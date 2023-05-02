@@ -1,0 +1,15 @@
+@use '../../App.scss';
+
+.note-selector {
+    width: 100%;
+    height: auto;
+    fill: App.$color1
+}
+
+.note {
+    color: App.$color1;
+
+    &.active {
+        color: App.$color4
+    }
+}
