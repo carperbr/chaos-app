@@ -1,9 +1,9 @@
-@use '../../App';
+@use '../../colors';
 
 .pitch-class {
-    fill: App.$color1;
+    fill: colors.$color1;
 
     &.selected {
-        fill: App.$color3
+        fill: colors.$color3
     }
 }

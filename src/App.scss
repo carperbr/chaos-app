@@ -1,21 +1,17 @@
-$color1: #111d2e;
-$color2: #0d4a6b;
-$color3: #0886b8;
-$color4: #07cfff;
-$color5: #0ffff8;
+@use './colors.scss';
 
-.App {
+.app {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     width: 100vw;
-  }
+}
   
-  .tone-circle-container {
+.tone-circle-container {
     position: relative;
     width: 80%;
     height: 80%;
     max-width: 600px;
     max-height: 600px;
-  }
+}

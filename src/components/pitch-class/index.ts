@@ -1,1 +1,1 @@
-export * from './pitch-class.component'
+export * from './pitch-class'

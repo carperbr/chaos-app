@@ -1,1 +1,1 @@
-export * from './tone-circle.component'
+export * from './tone-circle'
