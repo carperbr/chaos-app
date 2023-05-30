@@ -36,15 +36,16 @@ function App() {
         const Component = win.component;
 
         return (
-        <div
-          style={{ position: 'relative', zIndex: win.zIndex }}
-          onMouseDown={() => handleWindowClick(win.id)}
-          key={win.id}
-        >
-          <Component onClose={() => handleWindowClose(win.id)} />
-        </div>
-        )
-      })}
+          <div
+            style={{ position: 'relative', zIndex: win.zIndex }}
+            onMouseDown={() => handleWindowClick(win.id)}
+            key={win.id}
+          >
+            <Component onClose={() => handleWindowClose(win.id)} />
+          </div>
+      )}
+    )}
+    
     </div>
   )
 }
