@@ -48,7 +48,6 @@ export const ToneCircle = (props: ToneCircleProps) => {
                 height: Math.max(minHeight, modalSize.height + (e.clientY - ay))
             });
         }
-
         
         const onMouseUp = () => {
             window.removeEventListener('mousemove', onMouseMove)

@@ -18,7 +18,6 @@ export const ResizableModal = (props: ResizableModalProps) => {
 
     const handleResize = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         e.preventDefault();
-        const element = e.target as HTMLElement;
         const ax = e.clientX
         const ay = e.clientY
         
