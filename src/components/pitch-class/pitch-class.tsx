@@ -11,12 +11,12 @@ export interface PitchClassProps {
     x: number;
     y: number;
     selected: boolean;
-    onClick: (idx: number) => void
+    onClick: (idx: number, event: React.MouseEvent) => void
 }
 
 export const PitchClass = (props: PitchClassProps) => {
-    const handleClick = () => {
-        props.onClick(props.idx)
+    const handleClick = (event: React.MouseEvent) => {
+        props.onClick(props.idx, event)
     };
 
     const { note, x, y } = props;
@@ -28,7 +28,7 @@ export const PitchClass = (props: PitchClassProps) => {
             y={y}
             textAnchor="middle" 
             alignmentBaseline='central' 
-            onClick={() => handleClick()}>
+            onClick={(event) => handleClick(event)}>
             {note}
         </text>
     )

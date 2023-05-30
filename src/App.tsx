@@ -1,15 +1,15 @@
 import React, { useRef } from 'react';
 import { ToneCircle }  from './components'
 import './App.scss';
+import { ResizableModal } from './components/resizable-modal';
 
 function App() {
   const parentRef = useRef<HTMLDivElement>(null);
+  const parentRef2 = useRef<HTMLDivElement>(null)
 
   return (
     <div className="app">
-      <div className="tone-circle-container" ref={parentRef}>
-        <ToneCircle parentRef={parentRef} />
-      </div>
+        <ToneCircle />
     </div>
   );
 }

@@ -7,6 +7,7 @@ export interface NoteSelectorProps {
     activeIndex: number
     activeNote: Note;
     onNoteSelected: (idx: number, note: Note) => void;
+    style?: React.CSSProperties
 }
 
 export const NoteSelector = (props: NoteSelectorProps) => {
@@ -27,7 +28,7 @@ export const NoteSelector = (props: NoteSelectorProps) => {
     return (
         <div
             className="note-selector"
-            style={{ position: 'absolute', left: position.x, top: position.y }}
+            style={{ position: 'fixed', left: `${props.position.x}px`, top: `${props.position.y}px` }}
         >
             {noteElements}
         </div>
