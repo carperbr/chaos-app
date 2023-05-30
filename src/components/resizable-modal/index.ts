@@ -1,1 +1,1 @@
-export * from './resizable-modal'
+export * from "./resizable-modal";

@@ -1,2 +1,2 @@
-export * from './pitch-class'
-export * from './tone-circle'
+export * from "./pitch-class";
+export * from "./tone-circle";

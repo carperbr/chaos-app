@@ -1,37 +1,37 @@
 .handle {
-    background-color: #adadad;
-    border-radius: 4px 4px 0px 0px;
-    padding-left: 4px;
-    padding-right: 4px;
+  background-color: #adadad;
+  border-radius: 4px 4px 0px 0px;
+  padding-left: 4px;
+  padding-right: 4px;
 }
 
 .window-background {
-    position: fixed;
-    background-color: hsl(0, 0%, 90%);
-    box-shadow: 2px 2px 8px;
-    border-radius: 4px 4px 0px 0px;
-    overflow: hidden;
+  position: fixed;
+  background-color: hsl(0, 0%, 90%);
+  box-shadow: 2px 2px 8px;
+  border-radius: 4px 4px 0px 0px;
+  overflow: hidden;
 }
 
 .resize-handle {
-    position: absolute;
-    width: 16px;
-    height: 16px;
-    bottom: 0;
-    right: 0;
-    cursor: se-resize;
-    background-color: #ccc;
-    z-index: 2;
-  }
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  bottom: 0;
+  right: 0;
+  cursor: se-resize;
+  background-color: #ccc;
+  z-index: 2;
+}
 
 .modal {
-    position: fixed;
-    background-color: white;
-    border-radius: 4px;
-    overflow: hidden;
-    z-index: 1
+  position: fixed;
+  background-color: white;
+  border-radius: 4px;
+  overflow: hidden;
+  z-index: 1;
 }
 
 .window-body {
-    padding-left: 4px;
+  padding-left: 4px;
 }

@@ -1,66 +1,64 @@
-import React, { useState, useRef, ReactNode, CSSProperties } from 'react';
-import Draggable from 'react-draggable'
-import './resizable-modal.scss';
+import React, { useState, useRef, ReactNode, CSSProperties } from "react";
+import Draggable from "react-draggable";
+import "./resizable-modal.scss";
 
 interface ResizableModalProps {
-    title: string;
-    minHeight?: number;
-    minWidth?: number;
-    isOpen: boolean;
-    children: ReactNode;
+  title: string;
+  minHeight?: number;
+  minWidth?: number;
+  isOpen: boolean;
+  children: ReactNode;
 }
 
 export const ResizableModal = (props: ResizableModalProps) => {
-    const [modalSize, setModalSize] = useState({ width: 400, height: 300 });
+  const [modalSize, setModalSize] = useState({ width: 400, height: 300 });
 
-    const minHeight = props.minHeight !== undefined ? props.minHeight : 64;
-    const minWidth = props.minWidth !== undefined ? props.minWidth : 128;
+  const minHeight = props.minHeight !== undefined ? props.minHeight : 64;
+  const minWidth = props.minWidth !== undefined ? props.minWidth : 128;
 
-    const handleResize = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-        e.preventDefault();
-        const ax = e.clientX
-        const ay = e.clientY
-        
-        const onMouseMove = (e: MouseEvent) => {
-            setModalSize({
-                width: Math.max(minWidth, modalSize.width + (e.clientX - ax)),
-                height: Math.max(minHeight, modalSize.height + (e.clientY - ay))
-            });
-        }
+  const handleResize = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    e.preventDefault();
+    const ax = e.clientX;
+    const ay = e.clientY;
 
-        const onMouseUp = () => {
-            window.removeEventListener('mousemove', onMouseMove)
-            window.removeEventListener('mouseup', onMouseUp)
-        }
+    const onMouseMove = (e: MouseEvent) => {
+      setModalSize({
+        width: Math.max(minWidth, modalSize.width + (e.clientX - ax)),
+        height: Math.max(minHeight, modalSize.height + (e.clientY - ay)),
+      });
+    };
 
-        window.addEventListener('mousemove', onMouseMove)
-        window.addEventListener('mouseup', onMouseUp)
-    } 
+    const onMouseUp = () => {
+      window.removeEventListener("mousemove", onMouseMove);
+      window.removeEventListener("mouseup", onMouseUp);
+    };
 
-    if (!props.isOpen) {
-        return null;
-    }
+    window.addEventListener("mousemove", onMouseMove);
+    window.addEventListener("mouseup", onMouseUp);
+  };
 
-    const modalStyle: CSSProperties = {
-        width: modalSize.width,
-        height: modalSize.height
-    }
+  if (!props.isOpen) {
+    return null;
+  }
 
-    return (
-        <Draggable handle='.handle'>
-            <div className='window-background' style={modalStyle}>
-                <div className="handle">{props.title}</div>
+  const modalStyle: CSSProperties = {
+    width: modalSize.width,
+    height: modalSize.height,
+  };
 
-                <div className='window-body'>
-                    {props.children}
-                </div>
+  return (
+    <Draggable handle=".handle">
+      <div className="window-background" style={modalStyle}>
+        <div className="handle">{props.title}</div>
 
-                <div
-                    className="resize-handle"
-                    data-direction="se"
-                    onMouseDown={handleResize}
-                />
-            </div>
-        </Draggable>
-    )
-}
+        <div className="window-body">{props.children}</div>
+
+        <div
+          className="resize-handle"
+          data-direction="se"
+          onMouseDown={handleResize}
+        />
+      </div>
+    </Draggable>
+  );
+};

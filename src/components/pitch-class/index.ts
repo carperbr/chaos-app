@@ -1,1 +1,1 @@
-export * from './pitch-class'
+export * from "./pitch-class";

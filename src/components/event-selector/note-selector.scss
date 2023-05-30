@@ -1,15 +1,15 @@
-@use '../../colors';
+@use "../../colors";
 
 .note-selector {
-    width: 100%;
-    height: auto;
-    fill: colors.$color1
+  width: 100%;
+  height: auto;
+  fill: colors.$color1;
 }
 
 .note {
-    color: colors.$color1;
+  color: colors.$color1;
 
-    &.active {
-        color: colors.$color4
-    }
+  &.active {
+    color: colors.$color4;
+  }
 }
