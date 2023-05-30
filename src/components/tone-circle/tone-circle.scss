@@ -37,6 +37,16 @@
     z-index: 2;
   }
 
+.close-handle {
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      top: 0;
+      right: 0;
+      cursor: pointer;
+      z-index: 2;
+    }
+
 .modal {
     position: fixed;
     background-color: white;

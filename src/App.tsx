@@ -5,7 +5,7 @@ import { ResizableModal } from './components/resizable-modal';
 
 function App() {
   const [windows, setWindows] = useState(
-    [ToneCircle, ToneCircle].map((component, i) => {
+    [ToneCircle, ToneCircle, ToneCircle].map((component, i) => {
       return {
         component,
         zIndex: i,
@@ -26,17 +26,26 @@ function App() {
       })
   })
 
+  const handleWindowClose = (id: number) => {
+    console.log('close!')
+    setWindows(prevWindows => prevWindows.filter(win => win.id !== id));
+  }
+
   return (
     <div className="app">
-      {windows.sort((a,b) => a.zIndex - b.zIndex).map(win => (
+      {windows.sort((a,b) => a.zIndex - b.zIndex).map(win => {
+        const Component = win.component;
+
+        return (
         <div
           style={{ position: 'relative', zIndex: win.zIndex }}
           onMouseDown={() => handleWindowClick(win.id)}
           key={win.id}
         >
-          <win.component />
+          <Component onClose={() => handleWindowClose(win.id)} />
         </div>
-      ))}
+        )
+      })}
     </div>
   )
 }

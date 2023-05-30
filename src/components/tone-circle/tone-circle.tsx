@@ -2,11 +2,14 @@ import React, { useState, useRef, useEffect, ReactNode, CSSProperties } from 're
 import Draggable from 'react-draggable'
 import './tone-circle.scss';
 
+import { FaTimes } from 'react-icons/fa'
+
 import { PitchClass } from '../pitch-class'
 import { NOTES, Note } from '../../common'
 import { NoteSelector } from '../event-selector';
 
 export interface ToneCircleProps {
+    onClose: () => void;
     minHeight?: number;
     minWidth?: number;
 }
@@ -18,6 +21,7 @@ export const ToneCircle = (props: ToneCircleProps) => {
     const [activePosition, setActivePosition] = useState<{ x: number, y: number} | null>()
     const [notes, setNotes] = useState<Note[]>([...NOTES])
 
+    const onClose = props.onClose
     const minHeight = props.minHeight !== undefined ? props.minHeight : 64;
     const minWidth = props.minWidth !== undefined ? props.minWidth : 128;
     
@@ -85,7 +89,18 @@ export const ToneCircle = (props: ToneCircleProps) => {
         <div>
             <Draggable handle='.handle' bounds=".app">
                 <div className='window-background' style={modalStyle}>
-                    <div className="handle"><b>Tone Circle</b></div>
+                    <div className="handle">
+                        <b>
+                            Tone Circle
+                        </b>
+                        
+                        <div
+                            className="close-handle"
+                            onClick={() => onClose()}
+                        >
+                            <FaTimes />
+                        </div>
+                    </div>
 
                     <div className='window-body'>
                         <svg width={modalSize.width} height={modalSize.height}>
