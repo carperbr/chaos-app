@@ -28,7 +28,7 @@ export const NoteSelector = (props: NoteSelectorProps) => {
     return (
         <div
             className="note-selector"
-            style={{ position: 'fixed', left: `${props.position.x}px`, top: `${props.position.y}px` }}
+            style={{ position: 'fixed', left: `${position.x}px`, top: `${position.y}px` }}
         >
             {noteElements}
         </div>
