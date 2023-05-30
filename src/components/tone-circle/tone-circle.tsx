@@ -4,6 +4,8 @@ import { PitchClass } from '../pitch-class'
 import { NOTES, Note } from '../../common'
 import { NoteSelector } from '../event-selector';
 
+import { ResizableModal } from '../resizable-modal'
+
 export interface ToneCircleProps {
     parentRef?: React.RefObject<HTMLDivElement>
 }
@@ -88,6 +90,12 @@ export const ToneCircle = (props: ToneCircleProps) => {
                     />
                 </div>
             )}
+
+            <ResizableModal title="window" isOpen={true}>
+                <div>
+                    Test
+                </div>
+            </ResizableModal>
         </div>
     )
 }
