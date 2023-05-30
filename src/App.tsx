@@ -27,7 +27,6 @@ function App() {
   })
 
   const handleWindowClose = (id: number) => {
-    console.log('close!')
     setWindows(prevWindows => prevWindows.filter(win => win.id !== id));
   }
 
