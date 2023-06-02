@@ -1,18 +1,24 @@
-import React, { useState, useRef, ReactNode, CSSProperties } from "react";
-import Draggable from "react-draggable";
-import "./resizable-modal.scss";
+import React, {
+  useState,
+  CSSProperties,
+} from "react";
 
-interface ResizableModalProps {
-  title: string;
+import Draggable from "react-draggable";
+import { FaTimes } from "react-icons/fa";
+import { Fretboard } from '../fretboard'
+
+import "./fretboard-window.scss";
+
+export interface FretboardWindowProps {
+  onClose: () => void;
   minHeight?: number;
   minWidth?: number;
-  isOpen: boolean;
-  children: ReactNode;
 }
 
-export const ResizableModal = (props: ResizableModalProps) => {
+export const FretboardWindow = (props: FretboardWindowProps) => {
   const [modalSize, setModalSize] = useState({ width: 400, height: 300 });
 
+  const onClose = props.onClose;
   const minHeight = props.minHeight !== undefined ? props.minHeight : 64;
   const minWidth = props.minWidth !== undefined ? props.minWidth : 128;
 
@@ -37,28 +43,34 @@ export const ResizableModal = (props: ResizableModalProps) => {
     window.addEventListener("mouseup", onMouseUp);
   };
 
-  if (!props.isOpen) {
-    return null;
-  }
-
   const modalStyle: CSSProperties = {
     width: modalSize.width,
     height: modalSize.height,
   };
 
   return (
-    <Draggable handle=".handle">
-      <div className="window-background" style={modalStyle}>
-        <div className="handle">{props.title}</div>
+    <div>
+      <Draggable handle=".handle" bounds=".app">
+        <div className="window-background" style={modalStyle}>
+          <div className="handle">
+            <b>Tone Circle</b>
 
-        <div className="window-body">{props.children}</div>
+            <div className="close-handle" onClick={() => onClose()}>
+              <FaTimes />
+            </div>
+          </div>
 
-        <div
-          className="resize-handle"
-          data-direction="se"
-          onMouseDown={handleResize}
-        />
-      </div>
-    </Draggable>
+          <div className="window-body">
+            <Fretboard />
+          </div>
+
+          <div
+            className="resize-handle"
+            data-direction="se"
+            onMouseDown={handleResize}
+          />
+        </div>
+      </Draggable>
+    </div>
   );
 };

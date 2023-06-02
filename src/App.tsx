@@ -1,11 +1,11 @@
-import React, { useRef, useState } from "react";
-import { ToneCircle } from "./components";
+import { useState } from "react";
+import 'bootstrap/dist/css/bootstrap.min.css';
 import "./App.scss";
-import { ResizableModal } from "./components/resizable-modal";
+import { ToneCircle, Fretboard, Window } from "./components";
 
 function App() {
   const [windows, setWindows] = useState(
-    [ToneCircle, ToneCircle, ToneCircle].map((component, i) => {
+    [ToneCircle, ToneCircle, ToneCircle, Fretboard].map((component, i) => {
       return {
         component,
         zIndex: i,
@@ -14,17 +14,20 @@ function App() {
     })
   );
 
-  const handleWindowClick = (id: number) =>
-    setWindows((prevWindows) => {
-      const maxZIndex = Math.max(...prevWindows.map((win) => win.zIndex));
-      return prevWindows.map((win) => {
-        if (win.id == id) {
-          return { ...win, zIndex: maxZIndex + 1 };
-        }
+  const handleWindowClick = (id: number) => {
+    if (id !== windows[windows.length - 1].id) {
+      setWindows((prevWindows) => {
+        const maxZIndex = Math.max(...prevWindows.map((win) => win.zIndex));
+        return prevWindows.map((win) => {
+          if (win.id === id) {
+            return { ...win, zIndex: maxZIndex + 1 };
+          }
 
-        return win;
+          return win;
+        });
       });
-    });
+    }
+  }
 
   const handleWindowClose = (id: number) => {
     setWindows((prevWindows) => prevWindows.filter((win) => win.id !== id));
@@ -43,7 +46,9 @@ function App() {
               onMouseDown={() => handleWindowClick(win.id)}
               key={win.id}
             >
-              <Component onClose={() => handleWindowClose(win.id)} />
+              <Window onClose={() => handleWindowClose(win.id)}>
+                <Component />
+              </Window>
             </div>
           );
         })}

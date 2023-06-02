@@ -106,7 +106,7 @@ export class Integrator {
   ];
 
   constructor(data: IntegratorData) {
-    if (data != undefined) {
+    if (data !== undefined) {
       this.parameters = [...data.params];
       this.state = [...data.state];
       this.differentials = [...data.differentials];
