@@ -24,8 +24,10 @@ export const Window = (props: WindowProps) => {
   const input = useRef<HTMLInputElement>(null);
   const [showTitleEdit, setShowTitleEdit] = useState(false);
 
-  const [title, setTitle] = useState(props.title ? props.title : "New Window")
-  const [currTitle, setCurrTitle] = useState(props.title ? props.title : "New Window")
+  const [title, setTitle] = useState(props.title ? props.title : "New Window");
+  const [currTitle, setCurrTitle] = useState(
+    props.title ? props.title : "New Window"
+  );
 
   const handleResize = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     e.preventDefault();
@@ -101,7 +103,7 @@ export const Window = (props: WindowProps) => {
 
   const handleClickTitle = () => {
     if (!showTitleEdit) {
-      setCurrTitle(title)
+      setCurrTitle(title);
       setShowTitleEdit(true);
       document.addEventListener("mousedown", handleClickOutisdeTitle);
 
@@ -109,17 +111,16 @@ export const Window = (props: WindowProps) => {
         if (input.current) {
           input.current.focus();
         }
-      }, 50)
-
+      }, 50);
     }
   };
 
   const handleTitleKey = (e: React.KeyboardEvent<any>) => {
-    if (e.key.toLowerCase() == 'enter') {
-      setTitle(currTitle)
-      setShowTitleEdit(false)
+    if (e.key.toLowerCase() == "enter") {
+      setTitle(currTitle);
+      setShowTitleEdit(false);
     }
-  }
+  };
 
   const modalStyle: CSSProperties = {
     width: modalSize.width,
@@ -128,45 +129,54 @@ export const Window = (props: WindowProps) => {
 
   return (
     <>
-    <div>
-      <Draggable handle=".handle" bounds=".app">
-        <div className="window-background" style={modalStyle}>
-          <div className={"handle"}>
-            <text ref={target}><b className="title" onClick={() => handleClickTitle()}>{title}</b></text>
+      <div>
+        <Draggable handle=".handle" bounds=".app">
+          <div className="window-background" style={modalStyle}>
+            <div className={"handle"}>
+              <text ref={target}>
+                <b className="title" onClick={() => handleClickTitle()}>
+                  {title}
+                </b>
+              </text>
 
-            <CloseButton className="close-handle" onClick={() => onClose()} />
+              <CloseButton className="close-handle" onClick={() => onClose()} />
+            </div>
+
+            <WindowContext.Provider value={modalSize}>
+              <div className="window-body">{props.children}</div>
+            </WindowContext.Provider>
+
+            <div
+              className="resize-handle-corner"
+              data-direction="se"
+              onMouseDown={handleResize}
+            />
+
+            <div
+              className="resize-handle-bottom"
+              data-direction="se"
+              onMouseDown={handleResizeBottom}
+            />
+
+            <div
+              className="resize-handle-right"
+              data-direction="se"
+              onMouseDown={handleResizeRight}
+            />
           </div>
-
-          <WindowContext.Provider value={modalSize}>
-            <div className="window-body">{props.children}</div>
-          </WindowContext.Provider>
-
-          <div
-            className="resize-handle-corner"
-            data-direction="se"
-            onMouseDown={handleResize}
-          />
-
-          <div
-            className="resize-handle-bottom"
-            data-direction="se"
-            onMouseDown={handleResizeBottom}
-          />
-
-          <div
-            className="resize-handle-right"
-            data-direction="se"
-            onMouseDown={handleResizeRight}
-          />
-        </div>
-      </Draggable>
-    </div>
+        </Draggable>
+      </div>
 
       <Overlay target={target.current} show={showTitleEdit} placement="top">
         <Popover>
           <Popover.Header as="h3">Change Note</Popover.Header>
           <Popover.Body ref={popover}>
-            <input ref={input} value={currTitle} onChange={(e) => setCurrTitle(e.target.value)} onKeyDown={(e) => handleTitleKey(e)} />
+            <input
+              ref={input}
+              value={currTitle}
+              onChange={(e) => setCurrTitle(e.target.value)}
+              onKeyDown={(e) => handleTitleKey(e)}
+            />
           </Popover.Body>
         </Popover>
       </Overlay>

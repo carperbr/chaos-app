@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import { FretboardNote } from "../fretboard-note";
 import "./fretboard-string.scss";
 
@@ -17,7 +17,7 @@ export const FretboardString = (props: FretboardStringProps) => {
         x2={props.points[1].x}
         y2={props.points[1].y}
       />
-      
+
       {props.points.slice(2).map((v, idx) => (
         <FretboardNote
           key={idx}
