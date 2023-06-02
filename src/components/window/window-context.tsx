@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 
 export const WindowContext = React.createContext({
-    width: 400,
-    height: 300
-})
+  width: 400,
+  height: 300,
+});

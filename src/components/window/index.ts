@@ -1,2 +1,2 @@
 export * from "./window";
-export * from './window-context';
+export * from "./window-context";

@@ -1,1 +1,1 @@
-export * from './fretboard'
+export * from "./fretboard";

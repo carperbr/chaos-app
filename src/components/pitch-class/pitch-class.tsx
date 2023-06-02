@@ -1,5 +1,5 @@
-import React, { useState, useRef, useEffect } from "react";
-import { Overlay, Form, Dropdown, DropdownButton, Popover } from 'react-bootstrap'
+import React, { useState, useRef } from "react";
+import { Overlay, Dropdown, DropdownButton, Popover } from "react-bootstrap";
 import "./pitch-class.scss";
 
 const notes = [
@@ -24,33 +24,33 @@ export interface PitchClassProps {
   x: number;
   y: number;
   selected: boolean;
-  handleNoteChange: (idx: number, note: Note) => void
+  handleNoteChange: (idx: number, note: Note) => void;
 }
 
 export const PitchClass = (props: PitchClassProps) => {
-  const [show, setShow] = useState(false)
-  const target = useRef<SVGTextElement>(null)
-  const popover = useRef<HTMLDivElement>(null)
+  const [show, setShow] = useState(false);
+  const target = useRef<SVGTextElement>(null);
+  const popover = useRef<HTMLDivElement>(null);
   const { note, x, y } = props;
 
   const handleClickOutisde = (event: MouseEvent) => {
     if (popover.current && !popover.current.contains(event.target as Node)) {
-      setShow(false)
-      document.removeEventListener('mousedown', handleClickOutisde)
+      setShow(false);
+      document.removeEventListener("mousedown", handleClickOutisde);
     }
-  }
+  };
 
   const handleClick = () => {
     if (!show) {
-      setShow(true)
-      document.addEventListener('mousedown', handleClickOutisde);
+      setShow(true);
+      document.addEventListener("mousedown", handleClickOutisde);
     }
-  }
+  };
 
   const handleSelection = (note: Note) => {
-    props.handleNoteChange(props.idx, note)
-    setShow(false)
-  }
+    props.handleNoteChange(props.idx, note);
+    setShow(false);
+  };
 
   return (
     <>
@@ -66,18 +66,25 @@ export const PitchClass = (props: PitchClassProps) => {
         {note}
       </text>
 
-      <Overlay target={target.current} show={show} placement='bottom'>
+      <Overlay target={target.current} show={show} placement="bottom">
         <Popover>
           <Popover.Header as="h3">Change Note</Popover.Header>
           <Popover.Body ref={popover}>
             <DropdownButton
               title={note}
               onChange={(e) => console.log(e)}
-              variant="Primary">
-                {notes.map((n, idx) => (
-                  <Dropdown.Item eventKey={idx} active={n == props.note} onClick={() => handleSelection(n)}>{n}</Dropdown.Item>
-                ))}
-              </DropdownButton>
+              variant="Primary"
+            >
+              {notes.map((n, idx) => (
+                <Dropdown.Item
+                  eventKey={idx}
+                  active={n === props.note}
+                  onClick={() => handleSelection(n)}
+                >
+                  {n}
+                </Dropdown.Item>
+              ))}
+            </DropdownButton>
           </Popover.Body>
         </Popover>
       </Overlay>

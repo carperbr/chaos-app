@@ -1,5 +1,5 @@
-import { useState } from "react";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import React, { useState } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.scss";
 import { ToneCircle, Fretboard, Window } from "./components";
 
@@ -27,7 +27,7 @@ function App() {
         });
       });
     }
-  }
+  };
 
   const handleWindowClose = (id: number) => {
     setWindows((prevWindows) => prevWindows.filter((win) => win.id !== id));

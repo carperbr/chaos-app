@@ -1,7 +1,4 @@
-import {
-  useState,
-  useContext,
-} from "react";
+import React, { useState, useContext } from "react";
 import "./tone-circle.scss";
 
 import { PitchClass } from "../pitch-class";
@@ -19,7 +16,7 @@ export const ToneCircle = () => {
   } | null>();
   const [notes, setNotes] = useState<Note[]>([...NOTES]);
 
-  const handleNoteSelected = (idx: number, newNote: Note) => { 
+  const handleNoteSelected = (idx: number, newNote: Note) => {
     setNotes(notes.map((v, i) => (idx === i ? newNote : v)));
     setActiveNote(null);
     setActiveIndex(null);
@@ -37,7 +34,7 @@ export const ToneCircle = () => {
     const y =
       modalSize.height / 2 +
       (innerRadius + outerRadius) * -0.5 * Math.cos(-angle);
-      
+
     return (
       <PitchClass
         key={i}
