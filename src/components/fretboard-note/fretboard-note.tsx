@@ -1,3 +1,4 @@
+import React from 'react';
 import { PitchUtils } from "../../utils";
 import "./fretboard-note.scss";
 
