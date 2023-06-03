@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.scss";
 import { ToneCircle, Fretboard, Window } from "./components";
+import { AppBar } from "./components/appbar";
 
 function App() {
   const [windows, setWindows] = useState(
@@ -35,6 +36,8 @@ function App() {
 
   return (
     <div className="app">
+      <AppBar />
+
       {windows
         .sort((a, b) => a.zIndex - b.zIndex)
         .map((win) => {
@@ -46,7 +49,7 @@ function App() {
               onMouseDown={() => handleWindowClick(win.id)}
               key={win.id}
             >
-              <Window onClose={() => handleWindowClose(win.id)}>
+              <Window onClose={() => handleWindowClose(win.id)} active={windows[windows.length - 1].id === win.id}>
                 <Component />
               </Window>
             </div>

@@ -11,6 +11,7 @@ export interface WindowProps {
   children: ReactNode;
   minHeight?: number;
   minWidth?: number;
+  active?: boolean;
 }
 
 export const Window = (props: WindowProps) => {
@@ -132,7 +133,7 @@ export const Window = (props: WindowProps) => {
       <div>
         <Draggable handle=".handle" bounds=".app">
           <div className="window-background" style={modalStyle}>
-            <div className={"handle"}>
+            <div className={props.active ? "handle active" : "handle"}>
               <text ref={target}>
                 <b className="title" onClick={() => handleClickTitle()}>
                   {title}

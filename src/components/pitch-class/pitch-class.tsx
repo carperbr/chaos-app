@@ -2,29 +2,15 @@ import React, { useState, useRef } from "react";
 import { Overlay, Dropdown, DropdownButton, Popover } from "react-bootstrap";
 import "./pitch-class.scss";
 
-const notes = [
-  "A",
-  "A#",
-  "B",
-  "C",
-  "C#",
-  "D",
-  "D#",
-  "E",
-  "F",
-  "F#",
-  "G",
-  "G#",
-] as const;
-type Note = (typeof notes)[number];
+import { NOTES } from "../../utils"
 
 export interface PitchClassProps {
-  note: Note;
+  note: string;
   idx: number;
   x: number;
   y: number;
   selected: boolean;
-  handleNoteChange: (idx: number, note: Note) => void;
+  handleNoteChange: (idx: number, note: string) => void;
 }
 
 export const PitchClass = (props: PitchClassProps) => {
@@ -47,7 +33,7 @@ export const PitchClass = (props: PitchClassProps) => {
     }
   };
 
-  const handleSelection = (note: Note) => {
+  const handleSelection = (note: string) => {
     props.handleNoteChange(props.idx, note);
     setShow(false);
   };
@@ -72,10 +58,9 @@ export const PitchClass = (props: PitchClassProps) => {
           <Popover.Body ref={popover}>
             <DropdownButton
               title={note}
-              onChange={(e) => console.log(e)}
               variant="Primary"
             >
-              {notes.map((n, idx) => (
+              {NOTES.map((n, idx) => (
                 <Dropdown.Item
                   eventKey={idx}
                   active={n === props.note}

@@ -4,7 +4,9 @@ import "./fretboard-string.scss";
 
 export interface FretboardStringProps {
   root: number;
+  string: number;
   points: { x: number; y: number }[];
+  handleRootUpdated: (idx: number, root: string) => void;
 }
 
 export const FretboardString = (props: FretboardStringProps) => {
@@ -25,6 +27,8 @@ export const FretboardString = (props: FretboardStringProps) => {
           x={v.x}
           y={v.y}
           fret={idx}
+          handleRootUpdated={idx == 0 ? props.handleRootUpdated : undefined}
+          string={props.string}
         ></FretboardNote>
       ))}
     </g>

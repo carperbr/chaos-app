@@ -1,14 +1,26 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 
 import "./fretboard.scss";
 
 import { FretboardString } from "../fretboard-string";
-import { notes } from "./notes";
+import { fretboards } from "../fretboard/labels";
+import { PitchUtils } from '../../utils'
 
 export const Fretboard = () => {
   const svgRef = useRef<SVGSVGElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  // const imgRef = useRef<HTMLImageElement>(null)
+
+  const handleRootUpdated = (idx: number, root: string) => {
+    setRoots(roots.map((r, i) => {
+      if (i === idx) {
+        return root;
+      }
+
+      return r;
+    })
+  )}
+
+  const [roots, setRoots] = useState(fretboards.multi8string.tuning)
 
   return (
     <>
@@ -260,8 +272,8 @@ export const Fretboard = () => {
             points="332.1 162.01 328.51 164.35 324.68 162.41 324.45 158.12 328.05 155.78 331.87 157.73 332.1 162.01"
           />
         </g>
-        {notes.map((str, idx) => (
-          <FretboardString root={idx} points={str} key={idx} />
+        {fretboards.multi8string.labels.map((str, idx) => (
+          <FretboardString root={PitchUtils.toPitchClass(roots[idx])} string={idx} points={str} key={idx} handleRootUpdated={handleRootUpdated} />
         ))}
       </svg>
       <canvas ref={canvasRef} width="2048" height="2048"></canvas>

@@ -2,8 +2,13 @@
   font-size: 12px;
   fill: rgb(64, 128, 128);
   font-family: MyriadPro-Regular, Myriad Pro;
+  cursor: default;
 
   &.selected {
     fill: rgb(64, 255, 128);
+  }
+
+  &.root {
+    cursor: pointer;
   }
 }

@@ -2,25 +2,17 @@ import React, { useState, useContext } from "react";
 import "./tone-circle.scss";
 
 import { PitchClass } from "../pitch-class";
-import { NOTES, Note } from "../../common";
-import { NoteSelector } from "../event-selector";
+import { NOTES } from "../../common";
 import { WindowContext } from "../window";
 
 export const ToneCircle = () => {
   const modalSize = useContext(WindowContext);
-  const [activeNote, setActiveNote] = useState<Note | null>();
   const [activeIndex, setActiveIndex] = useState<number | null>();
-  const [activePosition, setActivePosition] = useState<{
-    x: number;
-    y: number;
-  } | null>();
-  const [notes, setNotes] = useState<Note[]>([...NOTES]);
+  const [notes, setNotes] = useState<string[]>([...NOTES]);
 
-  const handleNoteSelected = (idx: number, newNote: Note) => {
+  const handleNoteSelected = (idx: number, newNote: string) => {
     setNotes(notes.map((v, i) => (idx === i ? newNote : v)));
-    setActiveNote(null);
     setActiveIndex(null);
-    setActivePosition(null);
   };
 
   const outerRadius = Math.min(modalSize.width, modalSize.height) * 0.4;
@@ -81,15 +73,6 @@ export const ToneCircle = () => {
           {circleNotes}
         </svg>
       </div>
-
-      {activePosition && activeNote && activeIndex != null && (
-        <NoteSelector
-          position={activePosition}
-          activeNote={activeNote}
-          activeIndex={activeIndex}
-          onNoteSelected={handleNoteSelected}
-        />
-      )}
     </>
   );
 };

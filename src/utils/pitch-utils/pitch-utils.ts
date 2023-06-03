@@ -1,31 +1,32 @@
 import { Scale } from "../scale";
 
-export class PitchUtils {
-  private static pitches = [
-    "c",
-    "c#",
-    "d",
-    "d#",
-    "e",
-    "f",
-    "f#",
-    "g",
-    "g#",
-    "a",
-    "a#",
-    "b",
-  ];
+export const NOTES = [
+  "C",
+  "C#",
+  "D",
+  "D#",
+  "E",
+  "F",
+  "F#",
+  "G",
+  "G#",  
+  "A",
+  "A#",
+  "B",
+] as string[];
 
+
+export class PitchUtils {
   static fromPitchClass(pitch: number): string {
     while (pitch < 0) {
       pitch = pitch + 12;
     }
 
-    return PitchUtils.pitches[pitch % 12];
+    return NOTES[pitch % 12];
   }
 
   static toPitchClass(note: string): number {
-    return PitchUtils.pitches.indexOf(note.toLowerCase());
+    return NOTES.indexOf(note.toUpperCase());
   }
 
   static calculateScalePitches(scale: Scale, tonic: number): number[] {
