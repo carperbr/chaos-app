@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import { Overlay, Dropdown, DropdownButton, Popover } from "react-bootstrap";
 import "./pitch-class.scss";
 
-import { NOTES } from "../../utils"
+import { NOTES } from "../../utils";
 
 export interface PitchClassProps {
   note: string;
@@ -56,10 +56,7 @@ export const PitchClass = (props: PitchClassProps) => {
         <Popover>
           <Popover.Header as="h3">Change Note</Popover.Header>
           <Popover.Body ref={popover}>
-            <DropdownButton
-              title={note}
-              variant="Primary"
-            >
+            <DropdownButton title={note} variant="Primary">
               {NOTES.map((n, idx) => (
                 <Dropdown.Item
                   eventKey={idx}

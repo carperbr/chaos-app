@@ -1,15 +1,6 @@
 export const fretboards = {
   multi8string: {
-    tuning: [
-      'F#',
-      'B',
-      'E',
-      'A',
-      'D',
-      'G',
-      'B',
-      'E'
-    ],
+    tuning: ["F#", "B", "E", "A", "D", "G", "B", "E"],
 
     labels: [
       [
@@ -42,7 +33,7 @@ export const fretboards = {
         { x: 722.51, y: 178.57 },
         { x: 736.51, y: 177.57 },
       ],
-    
+
       [
         // low b
         { x: 761.01, y: 159.53 },
@@ -73,7 +64,7 @@ export const fretboards = {
         { x: 720.51, y: 161.57 },
         { x: 735.51, y: 161.57 },
       ],
-    
+
       [
         // low e
         { x: 757.01, y: 131.78 },
@@ -104,7 +95,7 @@ export const fretboards = {
         { x: 717.51, y: 135.57 },
         { x: 732.51, y: 135.57 },
       ],
-    
+
       [
         // high a
         { x: 0.01, y: 116.03 },
@@ -135,7 +126,7 @@ export const fretboards = {
         { x: 715.51, y: 115.57 },
         { x: 729.51, y: 115.57 },
       ],
-    
+
       [
         // high d
         { x: 750.01, y: 84.53 },
@@ -166,7 +157,7 @@ export const fretboards = {
         { x: 713.51, y: 89.57 },
         { x: 727.51, y: 89.57 },
       ],
-    
+
       [
         // high g
         { x: 749.01, y: 65.28 },
@@ -197,7 +188,7 @@ export const fretboards = {
         { x: 710.51, y: 69.57 },
         { x: 724.51, y: 68.57 },
       ],
-    
+
       [
         // high b
         { x: 746.01, y: 42.53 },
@@ -228,7 +219,7 @@ export const fretboards = {
         { x: 707.51, y: 46.57 },
         { x: 722.51, y: 46.57 },
       ],
-    
+
       [
         // high e
         { x: 743.01, y: 16.28 },
@@ -259,6 +250,6 @@ export const fretboards = {
         { x: 705.51, y: 21.57 },
         { x: 719.51, y: 21.57 },
       ],
-    ]
-  }
-}
+    ],
+  },
+};

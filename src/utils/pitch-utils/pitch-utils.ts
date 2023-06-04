@@ -9,12 +9,11 @@ export const NOTES = [
   "F",
   "F#",
   "G",
-  "G#",  
+  "G#",
   "A",
   "A#",
   "B",
 ] as string[];
-
 
 export class PitchUtils {
   static fromPitchClass(pitch: number): string {

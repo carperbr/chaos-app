@@ -1,6 +1,37 @@
+$navbar-text-color: #ffffff8c;
+$navbar-hover-text-color: #ffffffbf;
+$navbar-active-text-color: #fff;
+
+$window-color: #000000b3;
+$window-hover-color: #000000e6;
+
 .appbar {
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    width: 100%;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+.appbar-item {
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  color: $navbar-text-color;
+  cursor: pointer;
+
+  &:hover {
+    color: $navbar-hover-text-color;
+  }
+
+  &.active {
+    color: $navbar-active-text-color
+  }
+}
+
+.window-item {
+  cursor: pointer;
+  color: $window-color;
+
+  &:hover {
+    color: $window-hover-color;
+  }
 }

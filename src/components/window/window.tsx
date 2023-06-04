@@ -5,9 +5,15 @@ import { CloseButton } from "react-bootstrap";
 import { Overlay, Dropdown, DropdownButton, Popover } from "react-bootstrap";
 import "./window.scss";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faClose, faMinus } from "@fortawesome/free-solid-svg-icons";
+
 export interface WindowProps {
   onClose: () => void;
-  title?: string;
+  onMinimize: () => void;
+  handleTitleUpdated: (id: number, title: string) => void;
+  id: number;
+  title: string;
   children: ReactNode;
   minHeight?: number;
   minWidth?: number;
@@ -15,7 +21,6 @@ export interface WindowProps {
 }
 
 export const Window = (props: WindowProps) => {
-  const onClose = props.onClose;
   const minHeight = props.minHeight !== undefined ? props.minHeight : 64;
   const minWidth = props.minWidth !== undefined ? props.minWidth : 128;
 
@@ -25,7 +30,6 @@ export const Window = (props: WindowProps) => {
   const input = useRef<HTMLInputElement>(null);
   const [showTitleEdit, setShowTitleEdit] = useState(false);
 
-  const [title, setTitle] = useState(props.title ? props.title : "New Window");
   const [currTitle, setCurrTitle] = useState(
     props.title ? props.title : "New Window"
   );
@@ -104,7 +108,7 @@ export const Window = (props: WindowProps) => {
 
   const handleClickTitle = () => {
     if (!showTitleEdit) {
-      setCurrTitle(title);
+      setCurrTitle(props.title);
       setShowTitleEdit(true);
       document.addEventListener("mousedown", handleClickOutisdeTitle);
 
@@ -118,7 +122,7 @@ export const Window = (props: WindowProps) => {
 
   const handleTitleKey = (e: React.KeyboardEvent<any>) => {
     if (e.key.toLowerCase() == "enter") {
-      setTitle(currTitle);
+      props.handleTitleUpdated(props.id, currTitle)
       setShowTitleEdit(false);
     }
   };
@@ -136,11 +140,12 @@ export const Window = (props: WindowProps) => {
             <div className={props.active ? "handle active" : "handle"}>
               <text ref={target}>
                 <b className="title" onClick={() => handleClickTitle()}>
-                  {title}
+                  {props.title} [{props.id}]
                 </b>
               </text>
 
-              <CloseButton className="close-handle" onClick={() => onClose()} />
+              <FontAwesomeIcon className="icon" icon={faClose} onClick={() => props.onClose()} />
+              <FontAwesomeIcon className="icon" icon={faMinus} onClick={() => props.onMinimize()} />
             </div>
 
             <WindowContext.Provider value={modalSize}>
