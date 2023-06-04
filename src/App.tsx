@@ -12,8 +12,8 @@ function App() {
         zIndex: i,
         id: i,
         visible: true,
-        type: component === Fretboard ? 'fretboard' : 'tone-circle',
-        title: 'New Window'
+        type: component === Fretboard ? "fretboard" : "tone-circle",
+        title: "New Window",
       };
     })
   );
@@ -45,36 +45,42 @@ function App() {
   };
 
   const handleWindowMinimized = (id: number) => {
-    setWindows((prevWindows) => prevWindows.map((win) => {
-      if (win.id === id) {
-        return { ...win, visible: false };
-      }
+    setWindows((prevWindows) =>
+      prevWindows.map((win) => {
+        if (win.id === id) {
+          return { ...win, visible: false };
+        }
 
-      return win;
-    }))
+        return win;
+      })
+    );
   };
 
   const handleWindowRestored = (id: number) => {
-    setWindows((prevWindows) => prevWindows.map((win) => {
-      if (win.id === id) {
-        return { ...win, visible: true };
-      }
+    setWindows((prevWindows) =>
+      prevWindows.map((win) => {
+        if (win.id === id) {
+          return { ...win, visible: true };
+        }
 
-      return win;
-    }))
+        return win;
+      })
+    );
 
     handleWindowClick(id);
-  }
+  };
 
   const handleTitleUpdated = (id: number, title: string) => {
-    setWindows((prevWindows) => prevWindows.map((win) => {
-      if (win.id === id) {
-        return { ...win, title: title }
-      }
+    setWindows((prevWindows) =>
+      prevWindows.map((win) => {
+        if (win.id === id) {
+          return { ...win, title: title };
+        }
 
-      return win;
-    }))
-  }
+        return win;
+      })
+    );
+  };
 
   return (
     <div className="app">
@@ -88,7 +94,7 @@ function App() {
             style={{ position: "relative", zIndex: win.zIndex }}
             onMouseDown={() => handleWindowClick(win.id)}
             key={win.id}
-            className={!win.visible ? 'hidden-window' : undefined}
+            className={!win.visible ? "hidden-window" : undefined}
           >
             <Window
               id={win.id}

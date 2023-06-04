@@ -122,7 +122,7 @@ export const Window = (props: WindowProps) => {
 
   const handleTitleKey = (e: React.KeyboardEvent<any>) => {
     if (e.key.toLowerCase() == "enter") {
-      props.handleTitleUpdated(props.id, currTitle)
+      props.handleTitleUpdated(props.id, currTitle);
       setShowTitleEdit(false);
     }
   };
@@ -144,8 +144,16 @@ export const Window = (props: WindowProps) => {
                 </b>
               </text>
 
-              <FontAwesomeIcon className="icon" icon={faClose} onClick={() => props.onClose()} />
-              <FontAwesomeIcon className="icon" icon={faMinus} onClick={() => props.onMinimize()} />
+              <FontAwesomeIcon
+                className="icon"
+                icon={faClose}
+                onClick={() => props.onClose()}
+              />
+              <FontAwesomeIcon
+                className="icon"
+                icon={faMinus}
+                onClick={() => props.onMinimize()}
+              />
             </div>
 
             <WindowContext.Provider value={modalSize}>
