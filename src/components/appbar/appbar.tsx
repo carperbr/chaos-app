@@ -1,25 +1,28 @@
 import React, { useState, useRef } from "react";
 import {
   Container,
+  ListGroup,
   Nav,
   Navbar,
-  NavDropdown,
+  Dropdown,
   Overlay,
   Popover,
 } from "react-bootstrap";
 import "./appbar.scss";
+
+import { Fretboard, ToneCircle } from "../../components";
 
 export interface Window {
   component: () => JSX.Element;
   zIndex: number;
   id: number;
   visible: boolean;
-  type: string;
   title: string;
 }
 
 export interface AppbarProps {
   handleWindowRestored: (id: number) => void;
+  handleWindowCreated: (component: () => JSX.Element) => void;
   windows: Window[];
 }
 
@@ -97,18 +100,29 @@ export const Appbar = (props: AppbarProps) => {
         <Popover>
           <Popover.Header as="h3">Fretboards</Popover.Header>
           <Popover.Body ref={fretboardPopover}>
-            {props.windows
-              .filter((win) => win.type === "fretboard")
-              .map((win) => {
-                return (
-                  <div
-                    className="window-item"
-                    onClick={() => props.handleWindowRestored(win.id)}
-                  >
-                    {win.title} [{win.id}]
-                  </div>
-                );
-              })}
+            <ListGroup>
+              {props.windows
+                .sort((a, b) => (a.id > b.id ? -1 : 1))
+                .filter((win) => win.component.name === Fretboard.name)
+                .map((win) => {
+                  return (
+                    <ListGroup.Item
+                      className="window-item"
+                      onClick={() => props.handleWindowRestored(win.id)}
+                      active={!win.visible}
+                    >
+                      {win.title} [{win.id}]
+                    </ListGroup.Item>
+                  );
+                })}
+              <ListGroup.Item></ListGroup.Item>
+              <ListGroup.Item
+                className="window-item"
+                onClick={() => props.handleWindowCreated(Fretboard)}
+              >
+                Open New Window
+              </ListGroup.Item>
+            </ListGroup>
           </Popover.Body>
         </Popover>
       </Overlay>
@@ -121,18 +135,29 @@ export const Appbar = (props: AppbarProps) => {
         <Popover>
           <Popover.Header as="h3">Pitch Sets</Popover.Header>
           <Popover.Body ref={pitchSetPopover}>
-            {props.windows
-              .filter((win) => win.type === "tone-circle")
-              .map((win) => {
-                return (
-                  <div
-                    className="window-item"
-                    onClick={() => props.handleWindowRestored(win.id)}
-                  >
-                    {win.title} [{win.id}]
-                  </div>
-                );
-              })}
+            <ListGroup>
+              {props.windows
+                .sort((a, b) => (a.id > b.id ? -1 : 1))
+                .filter((win) => win.component.name === ToneCircle.name)
+                .map((win) => {
+                  return (
+                    <ListGroup.Item
+                      className="window-item"
+                      onClick={() => props.handleWindowRestored(win.id)}
+                      active={!win.visible}
+                    >
+                      {win.title} [{win.id}]
+                    </ListGroup.Item>
+                  );
+                })}
+              <ListGroup.Item></ListGroup.Item>
+              <ListGroup.Item
+                className="window-item"
+                onClick={() => props.handleWindowCreated(ToneCircle)}
+              >
+                Open New Window
+              </ListGroup.Item>
+            </ListGroup>
           </Popover.Body>
         </Popover>
       </Overlay>

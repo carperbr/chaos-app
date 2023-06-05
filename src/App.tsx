@@ -10,20 +10,36 @@ function App() {
   >([]);
 
   const [windows, setWindows] = useState(
-    [ToneCircle, ToneCircle, ToneCircle, Fretboard].map((component, i) => {
+    [ToneCircle, ToneCircle].map((component, i) => {
       return {
         component,
         zIndex: i,
         id: i,
         visible: true,
-        type: component === Fretboard ? "fretboard" : "tone-circle",
         title: "New Window",
       };
     })
   );
 
+  const handleWindowCreated = (component: () => JSX.Element) => {
+    setWindows([
+      ...windows,
+      {
+        component,
+        id:
+          (windows.length > 0 ? Math.max(...windows.map((w) => w.id)) : 0) + 1,
+        zIndex: windows.length,
+        visible: true,
+        title: "New Window",
+      },
+    ]);
+  };
+
   const handleWindowClick = (id: number) => {
-    if (id !== windows[windows.length - 1].id) {
+    const maxZIndexWindow = windows.reduce((prev, current) =>
+      prev.zIndex > current.zIndex ? prev : current
+    );
+    if (id !== maxZIndexWindow.id) {
       setWindows((prevWindows) => {
         const maxZIndex = Math.max(...prevWindows.map((win) => win.zIndex));
 
@@ -31,7 +47,6 @@ function App() {
           if (win.id === id) {
             return { ...win, zIndex: maxZIndex + 1 };
           }
-
           return win;
         });
 
@@ -42,16 +57,6 @@ function App() {
           });
       });
     }
-  };
-
-  const savePitchSet = (name: string, pitches: string[]) => {
-    setPitchSets([
-      ...pitchSets,
-      {
-        name,
-        notes: pitches,
-      },
-    ]);
   };
 
   const handleWindowClose = (id: number) => {
@@ -98,7 +103,11 @@ function App() {
 
   return (
     <div className="app">
-      <Appbar windows={windows} handleWindowRestored={handleWindowRestored} />
+      <Appbar
+        windows={windows}
+        handleWindowRestored={handleWindowRestored}
+        handleWindowCreated={handleWindowCreated}
+      />
 
       {windows.map((win) => {
         const Component = win.component;

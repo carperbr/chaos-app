@@ -13,7 +13,11 @@ import {
 } from "react-bootstrap";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSave, faFolderOpen } from "@fortawesome/free-solid-svg-icons";
+import {
+  faSave,
+  faFolderOpen,
+  faTrash,
+} from "@fortawesome/free-solid-svg-icons";
 
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
 import { updatePitchSet, deletePitchSet } from "../../AppSlice";
@@ -80,8 +84,12 @@ export const ToneCircle = () => {
     );
   };
 
+  const handlePitchSetDeleted = (set: PitchSet) => {
+    dispatch(deletePitchSet(set));
+  };
+
   const handlePitchAdded = (pitch: string) => {
-    setNotes([...notes, pitch])
+    setNotes([...notes, pitch]);
   };
 
   const handlePitchSetCleared = () => {
@@ -182,7 +190,12 @@ export const ToneCircle = () => {
               />
               {pitchSets.map((pitchSet) => (
                 <ListGroup.Item as="li" active={pitchSet.title === name}>
-                  {pitchSet.title}{" "}
+                  {pitchSet.title}
+                  <FontAwesomeIcon
+                    icon={faTrash}
+                    className="icon"
+                    onClick={() => handlePitchSetDeleted(pitchSet)}
+                  />
                   {pitchSet.title === name ? (
                     <FontAwesomeIcon
                       icon={faSave}
@@ -222,27 +235,31 @@ export const ToneCircle = () => {
                   </ListGroup.Item>
 
                   <DropdownButton title={insertNote} variant="Primary">
-                    {NOTES.map((n, idx) => (
-                      !notes.includes(n) && <Dropdown.Item
-                        eventKey={idx}
-                        active={n === insertNote}
-                        onClick={() => setInsertNote(n)}
-                      >
-                        {n}
-                      </Dropdown.Item>
-                    ))}
+                    {NOTES.map(
+                      (n, idx) =>
+                        !notes.includes(n) && (
+                          <Dropdown.Item
+                            eventKey={idx}
+                            active={n === insertNote}
+                            onClick={() => setInsertNote(n)}
+                          >
+                            {n}
+                          </Dropdown.Item>
+                        )
+                    )}
                   </DropdownButton>
                 </div>
               )}
               {notes.length > 0 && (
-              <ListGroup.Item
-                className="pitch-set"
-                action
-                as="li"
-                onClick={() => handlePitchSetCleared()}
-              >
-                Clear Pitch Set
-              </ListGroup.Item>)}
+                <ListGroup.Item
+                  className="pitch-set"
+                  action
+                  as="li"
+                  onClick={() => handlePitchSetCleared()}
+                >
+                  Clear Pitch Set
+                </ListGroup.Item>
+              )}
             </ListGroup>
           </Popover.Body>
         </Popover>
