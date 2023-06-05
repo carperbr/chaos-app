@@ -2,8 +2,10 @@ import React, { useState, useRef } from "react";
 import { PitchUtils, NOTES } from "../../utils";
 import { Overlay, Popover, Dropdown, DropdownButton } from "react-bootstrap";
 import "./fretboard-note.scss";
+import { PitchSet } from "../../common/pitch-set";
 
 export interface FretboardNoteProps {
+  pitchSet: PitchSet;
   string: number;
   root: number;
   fret: number;
@@ -40,15 +42,22 @@ export const FretboardNote = (props: FretboardNoteProps) => {
     setShow(false);
   };
 
+  const note = PitchUtils.fromPitchClass(props.root + props.fret);
+  const idx = props.pitchSet.notes.findIndex((v) => v === note);
+
   return (
     <g>
       <text
-        className={props.fret == 0 ? "cls-7 root" : "cls-7"}
+        className={
+          "cls-7" +
+          (props.fret === 0 ? " root" : "") +
+          (idx !== -1 ? " selected" : "")
+        }
         transform={`translate(${props.x} ${props.y})`}
         onClick={() => (props.fret == 0 ? handleClick() : void undefined)}
         ref={target}
       >
-        {PitchUtils.fromPitchClass(props.root + props.fret)}
+        {idx === -1 ? note : idx + 1}
       </text>
 
       <Overlay target={target.current} show={show} placement="right">

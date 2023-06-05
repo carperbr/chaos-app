@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faTrash,
   faCircleArrowLeft,
-  faCircleArrowDown,
+  faCheck,
   faCircleArrowRight,
 } from "@fortawesome/free-solid-svg-icons";
 
@@ -18,7 +18,6 @@ export interface PitchClassProps {
   idx: number;
   x: number;
   y: number;
-  selected: boolean;
   handleNoteChange: (idx: number, note: string) => void;
   handleNoteRemoved: (idx: number) => void;
   handleNoteAdded: (idx: number, side: number, note: string) => void;
@@ -64,7 +63,7 @@ export const PitchClass = (props: PitchClassProps) => {
   return (
     <>
       <text
-        className={props.selected ? "pitch-class selected" : "pitch-class"}
+        className="pitch-class"
         x={x}
         y={y}
         textAnchor="middle"
@@ -81,33 +80,40 @@ export const PitchClass = (props: PitchClassProps) => {
           <Popover.Body ref={popover}>
             <div style={{ display: "flex" }}>
               <DropdownButton title={insertNote} variant="Primary">
-                {NOTES.map((n, idx) => (
-                  <Dropdown.Item
-                    eventKey={idx}
-                    active={n === insertNote}
-                    onClick={() => setInsertNote(n)}
-                  >
-                    {n}
-                  </Dropdown.Item>
-                ))}
+                {NOTES.map(
+                  (n, idx) =>
+                    !props.notes.includes(n) && (
+                      <Dropdown.Item
+                        eventKey={idx}
+                        active={n === insertNote}
+                        onClick={() => setInsertNote(n)}
+                      >
+                        {n}
+                      </Dropdown.Item>
+                    )
+                )}
               </DropdownButton>
               <FontAwesomeIcon
+                title="Save"
                 className="trash-icon"
-                icon={faCircleArrowDown}
+                icon={faCheck}
                 onClick={() => handleNoteChange(props.idx, insertNote)}
               ></FontAwesomeIcon>
               <FontAwesomeIcon
+                title="Insert Left"
                 className="trash-icon"
                 icon={faCircleArrowLeft}
                 onClick={() => handleNoteAdded(props.idx, 0, insertNote)}
               ></FontAwesomeIcon>
               <FontAwesomeIcon
+                title="Insert Right"
                 className="trash-icon"
                 icon={faCircleArrowRight}
                 onClick={() => handleNoteAdded(props.idx + 1, 0, insertNote)}
               ></FontAwesomeIcon>
               {props.notes.length > 1 && (
                 <FontAwesomeIcon
+                  title="Remove"
                   className="trash-icon"
                   icon={faTrash}
                   onClick={() => handleNoteRemoved(props.idx)}

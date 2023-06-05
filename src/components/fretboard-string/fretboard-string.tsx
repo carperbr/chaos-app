@@ -1,8 +1,10 @@
 import React from "react";
+import { PitchSet } from "../../common/pitch-set";
 import { FretboardNote } from "../fretboard-note";
 import "./fretboard-string.scss";
 
 export interface FretboardStringProps {
+  pitchSet: PitchSet;
   root: number;
   string: number;
   points: { x: number; y: number }[];
@@ -29,6 +31,7 @@ export const FretboardString = (props: FretboardStringProps) => {
           fret={idx}
           handleRootUpdated={idx == 0 ? props.handleRootUpdated : undefined}
           string={props.string}
+          pitchSet={props.pitchSet}
         ></FretboardNote>
       ))}
     </g>

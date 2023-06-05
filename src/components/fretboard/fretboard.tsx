@@ -4,11 +4,36 @@ import "./fretboard.scss";
 
 import { FretboardString } from "../fretboard-string";
 import { fretboards } from "../fretboard/labels";
-import { PitchUtils } from "../../utils";
+import { NOTES, PitchUtils } from "../../utils";
+import { PitchSet } from "../../common/pitch-set";
+import { Overlay, Popover, DropdownButton, Dropdown } from "react-bootstrap";
+
+import { useAppSelector } from "../../app/hooks";
 
 export const Fretboard = () => {
+  const pitchSets = useAppSelector((state) => state.app.pitchSets);
+
   const svgRef = useRef<SVGSVGElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [pitchSet, setPitchSet] = useState<PitchSet>({ title: "", notes: [] });
+
+  const [show, setShow] = useState(false);
+  const target = useRef<SVGPolygonElement>(null);
+  const popover = useRef<HTMLDivElement>(null);
+
+  const handleClickOutisde = (event: MouseEvent) => {
+    if (popover.current && !popover.current.contains(event.target as Node)) {
+      setShow(false);
+      document.removeEventListener("mousedown", handleClickOutisde);
+    }
+  };
+
+  const handleClick = () => {
+    if (!show) {
+      setShow(true);
+      document.addEventListener("mousedown", handleClickOutisde);
+    }
+  };
 
   const handleRootUpdated = (idx: number, root: string) => {
     setRoots(
@@ -35,6 +60,8 @@ export const Fretboard = () => {
           <polygon
             className="cls-1"
             points="0.51 47.78 740.51 0.53 763.51 196.53 0.51 175.53 0.51 47.78"
+            ref={target}
+            onClick={() => handleClick()}
           />
           <line
             className="cls-2"
@@ -281,10 +308,25 @@ export const Fretboard = () => {
             points={str}
             key={idx}
             handleRootUpdated={handleRootUpdated}
+            pitchSet={pitchSet}
           />
         ))}
       </svg>
       <canvas ref={canvasRef} width="2048" height="2048"></canvas>
+      <Overlay target={target.current} show={show} placement="auto">
+        <Popover>
+          <Popover.Header as="h3">Change Pitch Set</Popover.Header>
+          <Popover.Body ref={popover}>
+            <DropdownButton title={pitchSet.title} variant="Primary">
+              {pitchSets.map((pitchSet) => (
+                <Dropdown.Item onClick={() => setPitchSet(pitchSet)}>
+                  {pitchSet.title}
+                </Dropdown.Item>
+              ))}
+            </DropdownButton>
+          </Popover.Body>
+        </Popover>
+      </Overlay>
       {/* <img ref={imgRef} style={{display: "none" }} /> */}
     </>
   );

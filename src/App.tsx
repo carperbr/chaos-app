@@ -5,6 +5,10 @@ import { ToneCircle, Fretboard, Window } from "./components";
 import { Appbar } from "./components/appbar";
 
 function App() {
+  const [pitchSets, setPitchSets] = useState<
+    { name: string; notes: string[] }[]
+  >([]);
+
   const [windows, setWindows] = useState(
     [ToneCircle, ToneCircle, ToneCircle, Fretboard].map((component, i) => {
       return {
@@ -38,6 +42,16 @@ function App() {
           });
       });
     }
+  };
+
+  const savePitchSet = (name: string, pitches: string[]) => {
+    setPitchSets([
+      ...pitchSets,
+      {
+        name,
+        notes: pitches,
+      },
+    ]);
   };
 
   const handleWindowClose = (id: number) => {

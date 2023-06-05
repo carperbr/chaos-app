@@ -1,13 +1,18 @@
 .cls-1 {
   fill: #2d1b00;
+  stroke: #000;
+  stroke-miterlimit: 10;
+
+  &:hover {
+    fill: #1f1200;
+    cursor: pointer;
+  }
 }
 
-.cls-1,
 .cls-4 {
   stroke: #000;
 }
 
-.cls-1,
 .cls-2,
 .cls-3,
 .cls-4,
