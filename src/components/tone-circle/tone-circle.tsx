@@ -81,7 +81,7 @@ export const ToneCircle = () => {
   };
 
   const handlePitchAdded = (pitch: string) => {
-    setNotes([pitch]);
+    setNotes([...notes, pitch])
   };
 
   const handlePitchSetCleared = () => {
@@ -210,7 +210,7 @@ export const ToneCircle = () => {
                 </ListGroup.Item>
               )}
 
-              {notes.length === 0 && (
+              {notes.length < 12 && (
                 <div style={{ display: "flex" }}>
                   <ListGroup.Item
                     className="pitch-set"
@@ -223,7 +223,7 @@ export const ToneCircle = () => {
 
                   <DropdownButton title={insertNote} variant="Primary">
                     {NOTES.map((n, idx) => (
-                      <Dropdown.Item
+                      !notes.includes(n) && <Dropdown.Item
                         eventKey={idx}
                         active={n === insertNote}
                         onClick={() => setInsertNote(n)}
@@ -234,7 +234,7 @@ export const ToneCircle = () => {
                   </DropdownButton>
                 </div>
               )}
-
+              {notes.length > 0 && (
               <ListGroup.Item
                 className="pitch-set"
                 action
@@ -242,7 +242,7 @@ export const ToneCircle = () => {
                 onClick={() => handlePitchSetCleared()}
               >
                 Clear Pitch Set
-              </ListGroup.Item>
+              </ListGroup.Item>)}
             </ListGroup>
           </Popover.Body>
         </Popover>
