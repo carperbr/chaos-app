@@ -1,12 +1,6 @@
 export class Scale {
-  title: string;
-  steps: string;
-  tonic?: number;
-
-  constructor() {
-    this.title = "";
-    this.steps = "";
-  }
+  title: string = "";
+  steps: string = "";
 
   // A = 3 semitones, T = 2 semitones, S = 1 semitone
   static Scales: Scale[] = [

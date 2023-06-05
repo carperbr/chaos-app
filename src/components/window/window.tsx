@@ -181,7 +181,7 @@ export const Window = (props: WindowProps) => {
         </Draggable>
       </div>
 
-      <Overlay target={target.current} show={showTitleEdit} placement="top">
+      <Overlay target={target.current} show={showTitleEdit} placement="bottom">
         <Popover>
           <Popover.Header as="h3">Change Note</Popover.Header>
           <Popover.Body ref={popover}>

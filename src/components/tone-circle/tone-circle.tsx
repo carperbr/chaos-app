@@ -4,7 +4,13 @@ import "./tone-circle.scss";
 import { PitchClass } from "../pitch-class";
 import { NOTES } from "../../common";
 import { WindowContext } from "../window";
-import { Overlay, Popover, ListGroup } from "react-bootstrap";
+import {
+  Overlay,
+  Popover,
+  ListGroup,
+  Dropdown,
+  DropdownButton,
+} from "react-bootstrap";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSave, faFolderOpen } from "@fortawesome/free-solid-svg-icons";
@@ -23,6 +29,7 @@ export const ToneCircle = () => {
   const [showMenu, setShowMenu] = useState(false);
   const target = useRef<SVGCircleElement>(null);
   const popover = useRef<HTMLDivElement>(null);
+  const [insertNote, setInsertNote] = useState<string>("C");
 
   const handleNoteSelected = (idx: number, newNote: string) => {
     setNotes(notes.map((v, i) => (idx === i ? newNote : v)));
@@ -73,6 +80,15 @@ export const ToneCircle = () => {
     );
   };
 
+  const handlePitchAdded = (pitch: string) => {
+    setNotes([pitch]);
+  };
+
+  const handlePitchSetCleared = () => {
+    setNotes([]);
+    setName("");
+  };
+
   const handlePitchSetLoaded = (pitchSet: PitchSet) => {
     setNotes(pitchSet.notes);
     setName(pitchSet.title);
@@ -105,6 +121,7 @@ export const ToneCircle = () => {
         handleNoteChange={handleNoteSelected}
         handleNoteRemoved={handleNoteRemoved}
         handleNoteAdded={handleNoteAdded}
+        setNotes={setNotes}
       />
     );
   });
@@ -189,9 +206,43 @@ export const ToneCircle = () => {
                   as="li"
                   onClick={() => handlePitchSetSaved()}
                 >
-                  Save Pitch Set
+                  New Pitch Set
                 </ListGroup.Item>
               )}
+
+              {notes.length === 0 && (
+                <div style={{ display: "flex" }}>
+                  <ListGroup.Item
+                    className="pitch-set"
+                    action
+                    as="li"
+                    onClick={() => handlePitchAdded(insertNote)}
+                  >
+                    Add Pitch
+                  </ListGroup.Item>
+
+                  <DropdownButton title={insertNote} variant="Primary">
+                    {NOTES.map((n, idx) => (
+                      <Dropdown.Item
+                        eventKey={idx}
+                        active={n === insertNote}
+                        onClick={() => setInsertNote(n)}
+                      >
+                        {n}
+                      </Dropdown.Item>
+                    ))}
+                  </DropdownButton>
+                </div>
+              )}
+
+              <ListGroup.Item
+                className="pitch-set"
+                action
+                as="li"
+                onClick={() => handlePitchSetCleared()}
+              >
+                Clear Pitch Set
+              </ListGroup.Item>
             </ListGroup>
           </Popover.Body>
         </Popover>

@@ -1,5 +1,11 @@
 import React, { useState, useRef } from "react";
-import { Overlay, Dropdown, DropdownButton, Popover } from "react-bootstrap";
+import {
+  Overlay,
+  Dropdown,
+  DropdownButton,
+  Popover,
+  ListGroup,
+} from "react-bootstrap";
 import "./pitch-class.scss";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -10,7 +16,8 @@ import {
   faCircleArrowRight,
 } from "@fortawesome/free-solid-svg-icons";
 
-import { NOTES } from "../../utils";
+import { NOTES, PitchUtils } from "../../utils";
+import { calculateScaleNotes, Scale } from "../../utils/scale-utils";
 
 export interface PitchClassProps {
   notes: string[];
@@ -21,6 +28,7 @@ export interface PitchClassProps {
   handleNoteChange: (idx: number, note: string) => void;
   handleNoteRemoved: (idx: number) => void;
   handleNoteAdded: (idx: number, side: number, note: string) => void;
+  setNotes: (notes: string[]) => void;
 }
 
 export const PitchClass = (props: PitchClassProps) => {
@@ -57,6 +65,11 @@ export const PitchClass = (props: PitchClassProps) => {
 
   const handleNoteAdded = (idx: number, side: number, note: string) => {
     props.handleNoteAdded(idx, side, note);
+    setShow(false);
+  };
+
+  const createScale = (scale: Scale) => {
+    props.setNotes(calculateScaleNotes(scale, props.note));
     setShow(false);
   };
 
@@ -111,15 +124,33 @@ export const PitchClass = (props: PitchClassProps) => {
                 icon={faCircleArrowRight}
                 onClick={() => handleNoteAdded(props.idx + 1, 0, insertNote)}
               ></FontAwesomeIcon>
-              {props.notes.length > 1 && (
-                <FontAwesomeIcon
-                  title="Remove"
-                  className="trash-icon"
-                  icon={faTrash}
-                  onClick={() => handleNoteRemoved(props.idx)}
-                ></FontAwesomeIcon>
-              )}
+              <FontAwesomeIcon
+                title="Remove"
+                className="trash-icon"
+                icon={faTrash}
+                onClick={() => handleNoteRemoved(props.idx)}
+              ></FontAwesomeIcon>
             </div>
+            {props.notes.length === 1 && (
+              <div>
+                <ListGroup
+                  as="ul"
+                  style={{ maxHeight: "128px", overflowY: "scroll" }}
+                >
+                  {Scale.Scales.map((scale, idx) => (
+                    <div style={{ display: "flex" }}>
+                      <ListGroup.Item
+                        className="scale"
+                        eventKey={idx}
+                        onClick={() => createScale(scale)}
+                      >
+                        {scale.title}
+                      </ListGroup.Item>
+                    </div>
+                  ))}
+                </ListGroup>
+              </div>
+            )}
           </Popover.Body>
         </Popover>
       </Overlay>

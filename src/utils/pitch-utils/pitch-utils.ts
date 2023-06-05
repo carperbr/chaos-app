@@ -1,4 +1,4 @@
-import { Scale } from "../scale";
+import { Scale } from "../scale-utils";
 
 export const NOTES = [
   "C",
