@@ -10,4 +10,4 @@ The utils folder contains a weird numerical integrator I coded naively after sta
 
 If anyone finds this and is interested in the guitar fretboard stuff, I made that by tracing over a Kiesel 8-string multiscale guitar. I'll be adding 6, 7, and 8 string guitars with non-multiscale and multiscale options as the app matures which will allow for dynamically generated diagrams using scales or user defined pitch sets.
 
-![image](https://github.com/carperbr/chaos-music-app/assets/30326384/4071dc48-a652-494f-97da-dfb769c991de)
+![image](https://github.com/carperbr/musical-chaos-theory/assets/30326384/b914b014-b427-48eb-b19d-c8bd35f2d014)
