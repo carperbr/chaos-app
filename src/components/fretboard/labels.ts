@@ -1,5 +1,18 @@
 export const fretboards = {
   multi8string: {
+    tunings: [
+      {
+        title: "F# Standard",
+        strings: ["F#", "B", "E", "A", "D", "G", "B", "E"],
+      },
+      { title: "Drop E", strings: ["E", "B", "E", "A", "D", "G", "B", "E"] },
+      {
+        title: "E Standard",
+        strings: ["E", "A", "D", "G", "C", "F", "A", "D"],
+      },
+      { title: "Drop D", strings: ["D", "A", "D", "G", "C", "F", "A", "D"] },
+    ],
+
     tuning: ["F#", "B", "E", "A", "D", "G", "B", "E"],
 
     labels: [

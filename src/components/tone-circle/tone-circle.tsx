@@ -10,6 +10,12 @@ import {
   ListGroup,
   Dropdown,
   DropdownButton,
+  Modal,
+  Button,
+  Offcanvas,
+  FloatingLabel,
+  Tabs,
+  Tab,
 } from "react-bootstrap";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -17,6 +23,7 @@ import {
   faSave,
   faFolderOpen,
   faTrash,
+  faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
@@ -26,10 +33,12 @@ import { PitchSet } from "../../common/pitch-set";
 export const ToneCircle = () => {
   const pitchSets = useAppSelector((state) => state.app.pitchSets);
   const dispatch = useAppDispatch();
+  const [editMode, setEditMode] = useState<string>("Pitch Set");
 
   const modalSize = useContext(WindowContext);
-  const [name, setName] = useState<string>("New Pitch Set");
+  const [name, setName] = useState<string>("Untitled Pitch Set");
   const [notes, setNotes] = useState<string[]>([...NOTES]);
+  const [events, setEvents] = useState<{ note: string; octave: number }[]>([]);
   const [showMenu, setShowMenu] = useState(false);
   const target = useRef<SVGCircleElement>(null);
   const popover = useRef<HTMLDivElement>(null);
@@ -178,92 +187,115 @@ export const ToneCircle = () => {
         </svg>
       </div>
 
-      <Overlay target={target.current} show={showMenu} placement="auto">
-        <Popover>
-          <Popover.Header as="h3">Edit Set</Popover.Header>
-          <Popover.Body ref={popover}>
-            <ListGroup as="ul">
-              <input
-                className="title"
-                value={name}
-                onChange={(evt) => setName(evt.target.value)}
-              />
-              {pitchSets.map((pitchSet) => (
-                <ListGroup.Item as="li" active={pitchSet.title === name}>
-                  {pitchSet.title}
-                  <FontAwesomeIcon
-                    icon={faTrash}
-                    className="icon"
-                    onClick={() => handlePitchSetDeleted(pitchSet)}
+      <Offcanvas show={showMenu} onHide={() => setShowMenu(false)}>
+        <Offcanvas.Header className="menu-header">Edit {name}</Offcanvas.Header>
+
+        <Offcanvas.Body>
+          <Tabs
+            activeKey={editMode}
+            onSelect={(key) => setEditMode(key ? key : "")}
+            className="mb-3"
+          >
+            <Tab eventKey="Pitch Set" title="Pitch Set">
+              <ListGroup as="ul">
+                <div className="menu-input">
+                  <input
+                    className="menu-input2"
+                    value={name}
+                    onChange={(evt) => setName(evt.target.value)}
                   />
-                  {pitchSet.title === name ? (
+                  {name.trim() !== "" && (
                     <FontAwesomeIcon
-                      icon={faSave}
-                      className="icon"
-                      onClick={() => handlePitchSetSaved()}
-                    />
-                  ) : (
-                    <FontAwesomeIcon
-                      icon={faFolderOpen}
-                      className="icon"
-                      onClick={() => handlePitchSetLoaded(pitchSet)}
-                    />
+                      className="clear-icon"
+                      icon={faXmark}
+                      onClick={() => setName("")}
+                    ></FontAwesomeIcon>
                   )}
-                </ListGroup.Item>
-              ))}
+                </div>
+                {pitchSets.map((pitchSet) => (
+                  <ListGroup.Item as="li" active={pitchSet.title === name}>
+                    {pitchSet.title}
+                    <FontAwesomeIcon
+                      icon={faTrash}
+                      className="icon"
+                      onClick={() => handlePitchSetDeleted(pitchSet)}
+                    />
+                    {pitchSet.title === name ? (
+                      <FontAwesomeIcon
+                        icon={faSave}
+                        className="icon"
+                        onClick={() => handlePitchSetSaved()}
+                      />
+                    ) : (
+                      <FontAwesomeIcon
+                        icon={faFolderOpen}
+                        className="icon"
+                        onClick={() => handlePitchSetLoaded(pitchSet)}
+                      />
+                    )}
+                  </ListGroup.Item>
+                ))}
 
-              {pitchSets.find((v) => v.title === name) === undefined && (
-                <ListGroup.Item
-                  className="pitch-set"
-                  action
-                  as="li"
-                  onClick={() => handlePitchSetSaved()}
-                >
-                  New Pitch Set
-                </ListGroup.Item>
-              )}
-
-              {notes.length < 12 && (
-                <div style={{ display: "flex" }}>
+                {pitchSets.find((v) => v.title === name) === undefined && (
                   <ListGroup.Item
                     className="pitch-set"
                     action
                     as="li"
-                    onClick={() => handlePitchAdded(insertNote)}
+                    onClick={() => handlePitchSetSaved()}
                   >
-                    Add Pitch
+                    New Pitch Set
                   </ListGroup.Item>
+                )}
 
-                  <DropdownButton title={insertNote} variant="Primary">
-                    {NOTES.map(
-                      (n, idx) =>
-                        !notes.includes(n) && (
-                          <Dropdown.Item
-                            eventKey={idx}
-                            active={n === insertNote}
-                            onClick={() => setInsertNote(n)}
-                          >
-                            {n}
-                          </Dropdown.Item>
-                        )
-                    )}
-                  </DropdownButton>
-                </div>
-              )}
-              {notes.length > 0 && (
-                <ListGroup.Item
-                  className="pitch-set"
-                  action
-                  as="li"
-                  onClick={() => handlePitchSetCleared()}
-                >
-                  Clear Pitch Set
-                </ListGroup.Item>
-              )}
-            </ListGroup>
-          </Popover.Body>
-        </Popover>
-      </Overlay>
+                {notes.length < 12 && (
+                  <div style={{ display: "flex" }}>
+                    <ListGroup.Item
+                      className="pitch-set"
+                      action
+                      as="li"
+                      onClick={() => handlePitchAdded(insertNote)}
+                    >
+                      Add Pitch
+                    </ListGroup.Item>
+
+                    <DropdownButton
+                      title={insertNote}
+                      variant="Primary"
+                      className="pitch-dropdown"
+                    >
+                      {NOTES.map(
+                        (n, idx) =>
+                          !notes.includes(n) && (
+                            <Dropdown.Item
+                              eventKey={idx}
+                              active={n === insertNote}
+                              onClick={() => setInsertNote(n)}
+                            >
+                              {n}
+                            </Dropdown.Item>
+                          )
+                      )}
+                    </DropdownButton>
+                  </div>
+                )}
+                {notes.length > 0 && (
+                  <ListGroup.Item
+                    className="pitch-set"
+                    action
+                    as="li"
+                    onClick={() => handlePitchSetCleared()}
+                  >
+                    Clear Pitch Set
+                  </ListGroup.Item>
+                )}
+              </ListGroup>
+            </Tab>
+            <Tab eventKey="Event Set" title="Event Set">
+              Event Set
+            </Tab>
+          </Tabs>
+        </Offcanvas.Body>
+      </Offcanvas>
     </>
   );
 };

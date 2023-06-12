@@ -25,7 +25,7 @@ export const Window = (props: WindowProps) => {
   const minWidth = props.minWidth !== undefined ? props.minWidth : 128;
 
   const [modalSize, setModalSize] = useState({ width: 400, height: 300 });
-  const target = useRef<SVGTextElement>(null);
+  const target = useRef<HTMLDivElement>(null);
   const popover = useRef<HTMLDivElement>(null);
   const input = useRef<HTMLInputElement>(null);
   const [showTitleEdit, setShowTitleEdit] = useState(false);
@@ -138,21 +138,22 @@ export const Window = (props: WindowProps) => {
         <Draggable handle=".handle" bounds=".app">
           <div className="window-background" style={modalStyle}>
             <div className={props.active ? "handle active" : "handle"}>
-              <text ref={target}>
+              <div ref={target} className="window-title">
                 <b className="title" onClick={() => handleClickTitle()}>
                   {props.title} [{props.id}]
                 </b>
-              </text>
+              </div>
+
+              <FontAwesomeIcon
+                className="icon"
+                icon={faMinus}
+                onClick={() => props.onMinimize()}
+              />
 
               <FontAwesomeIcon
                 className="icon"
                 icon={faClose}
                 onClick={() => props.onClose()}
-              />
-              <FontAwesomeIcon
-                className="icon"
-                icon={faMinus}
-                onClick={() => props.onMinimize()}
               />
             </div>
 

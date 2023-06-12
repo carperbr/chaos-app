@@ -47,7 +47,9 @@ export const Fretboard = () => {
     );
   };
 
-  const [roots, setRoots] = useState(fretboards.multi8string.tuning);
+  const [roots, setRoots] = useState(
+    fretboards.multi8string.tunings[0].strings
+  );
 
   return (
     <>
@@ -317,10 +319,29 @@ export const Fretboard = () => {
         <Popover>
           <Popover.Header as="h3">Change Pitch Set</Popover.Header>
           <Popover.Body ref={popover}>
-            <DropdownButton title={pitchSet.title} variant="Primary">
-              {pitchSets.map((pitchSet) => (
-                <Dropdown.Item onClick={() => setPitchSet(pitchSet)}>
-                  {pitchSet.title}
+            <DropdownButton
+              title={pitchSet.title ? pitchSet.title : "Untitled"}
+              variant="Primary"
+            >
+              <Dropdown.Item
+                onClick={() => setPitchSet({ title: "None", notes: [] })}
+                active={pitchSet.title === "None"}
+              >
+                {"None"}
+              </Dropdown.Item>
+              {pitchSets.map((set) => (
+                <Dropdown.Item
+                  onClick={() => setPitchSet(set)}
+                  active={pitchSet.title === set.title}
+                >
+                  {set.title}
+                </Dropdown.Item>
+              ))}
+            </DropdownButton>
+            <DropdownButton title="Tuning" variant="Primary">
+              {fretboards.multi8string.tunings.map((tuning) => (
+                <Dropdown.Item onClick={() => setRoots(tuning.strings)}>
+                  {tuning.title}
                 </Dropdown.Item>
               ))}
             </DropdownButton>

@@ -133,10 +133,7 @@ export const PitchClass = (props: PitchClassProps) => {
             </div>
             {props.notes.length === 1 && (
               <div>
-                <ListGroup
-                  as="ul"
-                  style={{ maxHeight: "128px", overflowY: "scroll" }}
-                >
+                <ListGroup as="ul" className="scale-list">
                   {Scale.Scales.map((scale, idx) => (
                     <div style={{ display: "flex" }}>
                       <ListGroup.Item
