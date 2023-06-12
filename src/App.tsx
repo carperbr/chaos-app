@@ -36,27 +36,22 @@ function App() {
   };
 
   const handleWindowClick = (id: number) => {
-    const maxZIndexWindow = windows.reduce((prev, current) =>
-      prev.zIndex > current.zIndex ? prev : current
-    );
-    if (id !== maxZIndexWindow.id) {
-      setWindows((prevWindows) => {
-        const maxZIndex = Math.max(...prevWindows.map((win) => win.zIndex));
+    setWindows((prevWindows) => {
+      const maxZIndex = Math.max(...prevWindows.map((win) => win.zIndex));
 
-        const updatedWindows = prevWindows.map((win) => {
-          if (win.id === id) {
-            return { ...win, zIndex: maxZIndex + 1 };
-          }
-          return win;
-        });
-
-        return updatedWindows
-          .sort((a, b) => a.zIndex - b.zIndex)
-          .map((win, idx) => {
-            return { ...win, zIndex: idx };
-          });
+      const updatedWindows = prevWindows.map((win) => {
+        if (win.id === id) {
+          return { ...win, zIndex: maxZIndex + 1 };
+        }
+        return win;
       });
-    }
+
+      return updatedWindows
+        .sort((a, b) => a.zIndex - b.zIndex)
+        .map((win, idx) => {
+          return { ...win, zIndex: idx };
+        });
+    });
   };
 
   const handleWindowClose = (id: number) => {
@@ -76,6 +71,8 @@ function App() {
   };
 
   const handleWindowRestored = (id: number) => {
+    handleWindowClick(id);
+
     setWindows((prevWindows) =>
       prevWindows.map((win) => {
         if (win.id === id) {
@@ -85,8 +82,6 @@ function App() {
         return win;
       })
     );
-
-    handleWindowClick(id);
   };
 
   const handleTitleUpdated = (id: number, title: string) => {
